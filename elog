@@ -1,0 +1,19 @@
+#!/usr/bin/perl -w
+
+use ELog;
+
+use UniLang::Agent::Agent;
+use UniLang::Util::Message;
+
+$UNIVERSAL::agent = UniLang::Agent::Agent->new
+  (Name => "ELog",
+   ReceiveHandler => \&Receive);
+$UNIVERSAL::elog = ELog->new();
+
+sub Receive {
+  my %args = @_;
+  $UNIVERSAL::elog->ProcessMessage
+    (Message => $args{Message});
+}
+
+$UNIVERSAL::elog->Execute();
